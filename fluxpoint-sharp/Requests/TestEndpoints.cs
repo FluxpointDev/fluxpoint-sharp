@@ -13,15 +13,15 @@ namespace fluxpoint_sharp
             Client = client;
         }
 
-        private FluxpointClient Client;
+        private readonly FluxpointClient Client;
         public async Task<HomeResponse> GetHome()
         {
-            return (HomeResponse)await Client.SendRequest(HttpMethod.Get, "");
+            return await Client.SendRequest<HomeResponse>(HttpType.Get, "/");
         }
 
-        public async Task<byte[]> GetImage()
+        public async Task<IResponse> GetError()
         {
-            return await Client.SendImageRequest(HttpMethod.Get, "/gen/test");
+            return await Client.SendRequest<IResponse>(HttpType.Get, "/http?code=400");
         }
     }
 }

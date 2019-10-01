@@ -4,13 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>fluxpoint_sharp</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>First test release</PackageReleaseNotes>
+    <PackageReleaseNotes>Added all current endpoints</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/FluxpointDev/fluxpoint-sharp</RepositoryUrl>
     <PackageProjectUrl>https://fluxpoint.dev</PackageProjectUrl>
     <Company>Fluxpoint Development</Company>
     <Authors>Builderb</Authors>
     <Description>A C# lib for the Fluxpoint API with gallery images, image gen and other misc stuff</Description>
-    <Version>1.0.1</Version>
+    <Version>1.2</Version>
     <PackageTags>discord,bot,discordbot,discord bot,api,fluxpoint,fluxpointdev,fluxpoint dev,fluxpoint development</PackageTags>
   </PropertyGroup>
 

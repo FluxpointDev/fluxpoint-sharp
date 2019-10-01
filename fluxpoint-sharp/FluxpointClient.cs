@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -25,38 +26,68 @@ namespace fluxpoint_sharp
             Client.DefaultRequestHeaders.Add("Authorization", token);
             Client.BaseAddress = new Uri(Url);
             Test = new TestEndpoints(this);
+            Gallery = new GalleryEndpoints(this);
+            ImageGen = new ImageGenEndpoints(this);
+            CustomImageGen = new CustomImageGenEndpoints(this);
         }
 
         private readonly HttpClient Client = new HttpClient();
         public readonly string Url = "https://api.fluxpoint.dev/";
 
         public readonly TestEndpoints Test;
+        public readonly GalleryEndpoints Gallery;
+        public readonly ImageGenEndpoints ImageGen;
+        public readonly CustomImageGenEndpoints CustomImageGen;
 
-        public async Task<IResponse> SendRequest(HttpMethod method, string url)
+        public async Task<bool> TestAuthentication()
+        {
+            ApiMeResponse Res = await SendRequest<ApiMeResponse>(HttpType.Get, "/me");
+            if (Res.code == 200)
+                return true;
+            return false;
+        }
+
+        public async Task<ApiMeResponse> GetMe()
+        {
+            return await SendRequest<ApiMeResponse>(HttpType.Get, "/me");
+        }
+
+        public async Task<T> SendRequest<T>(HttpType method, string url) where T : IResponse
         {
             try
             {
-                HttpRequestMessage Req = new HttpRequestMessage(method, url);
+                HttpMethod mt = HttpMethod.Get;
+                if (method == HttpType.Post)
+                    mt = HttpMethod.Post;
+                HttpRequestMessage Req = new HttpRequestMessage(mt, url);
                 HttpResponseMessage Res = await Client.SendAsync(Req);
                 string Message = await Res.Content.ReadAsStringAsync();
-                IResponse response = (IResponse)Newtonsoft.Json.JsonConvert.DeserializeObject(Message);
+                JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Formatting = Formatting.Indented
+                };
+                T response = JsonConvert.DeserializeObject<T>(Message, jsonSerializerSettings);
                 if (response == null)
-                    return new ErrorResponse(500, "Could not parse json response");
+                    return new IResponse(500, "Could not parse json") as T;
                 return response;
             }
             catch (Exception ex)
             {
-                return new ErrorResponse(400, ex.Message);
+                return new IResponse(400, ex.Message) as T;
             }
         }
 
-        public async Task<byte[]> SendImageRequest(HttpMethod method, string url)
+        public async Task<byte[]> SendImageRequest(ITemplate template, string url)
         {
             try
             {
-                HttpRequestMessage Req = new HttpRequestMessage(method, url);
+                HttpRequestMessage Req = new HttpRequestMessage(HttpMethod.Get, new Uri(url));
+                if (template == null)
+                    Req.Content = new StringContent(JsonConvert.SerializeObject(template), System.Text.Encoding.UTF8);
                 HttpResponseMessage Res = await Client.SendAsync(Req);
-               byte[] Bytes = await Res.Content.ReadAsByteArrayAsync();
+                byte[] Bytes = await Res.Content.ReadAsByteArrayAsync();
                 return Bytes;
             }
             catch
@@ -65,22 +96,26 @@ namespace fluxpoint_sharp
             }
         }
 
-        public async Task<JObject> SendCustomRequest(HttpMethod method, string url)
-        {
-            try
-            {
-                HttpRequestMessage Req = new HttpRequestMessage(method, url);
-                HttpResponseMessage Res = await Client.SendAsync(Req);
-                string Message = await Res.Content.ReadAsStringAsync();
-                JObject response = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(Message);
-                if (response == null)
-                    return (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(Newtonsoft.Json.JsonConvert.SerializeObject(new ErrorResponse(500, "Could not parse json response")));
-                return response;
-            }
-            catch (Exception ex)
-            {
-                return (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(Newtonsoft.Json.JsonConvert.SerializeObject(new ErrorResponse(400, ex.Message)));
-            }
-        }
+        //public async Task<JObject> SendCustomRequest(HttpMethod method, string url)
+        //{
+        //    try
+        //    {
+        //        HttpRequestMessage Req = new HttpRequestMessage(method, url);
+        //        HttpResponseMessage Res = await Client.SendAsync(Req);
+        //        string Message = await Res.Content.ReadAsStringAsync();
+        //        JObject response = (JObject)JsonConvert.DeserializeObject(Message);
+        //        if (response == null)
+        //            return (JObject)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new IResponse(500, "Could not parse json response")));
+        //        return response;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return (JObject)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new IResponse(400, ex.Message)));
+        //    }
+        //}
+    }
+    public enum HttpType
+    {
+        Get, Post
     }
 }
