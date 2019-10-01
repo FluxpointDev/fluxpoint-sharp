@@ -84,7 +84,7 @@ namespace fluxpoint_sharp
             try
             {
                 HttpRequestMessage Req = new HttpRequestMessage(HttpMethod.Get, new Uri(url));
-                if (template == null)
+                if (template != null)
                     Req.Content = new StringContent(JsonConvert.SerializeObject(template), System.Text.Encoding.UTF8);
                 HttpResponseMessage Res = await Client.SendAsync(Req);
                 byte[] Bytes = await Res.Content.ReadAsByteArrayAsync();
