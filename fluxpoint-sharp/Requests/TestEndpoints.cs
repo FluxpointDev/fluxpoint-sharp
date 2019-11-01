@@ -18,7 +18,6 @@ namespace fluxpoint_sharp
         {
             return await Client.SendRequest<HomeResponse>(HttpType.Get, "/");
         }
-
         public async Task<IResponse> GetError()
         {
             return await Client.SendRequest<IResponse>(HttpType.Get, "/http?code=400");

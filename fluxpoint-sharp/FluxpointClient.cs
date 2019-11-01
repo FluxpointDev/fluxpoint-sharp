@@ -22,6 +22,7 @@ namespace fluxpoint_sharp
 
             if (string.IsNullOrEmpty(token))
                 throw new Exception("Token cannot be null");
+
             Client.DefaultRequestHeaders.Add("User-Agent", $"fluxpoint-sharp | {botname}");
             Client.DefaultRequestHeaders.Add("Authorization", token);
             Client.BaseAddress = new Uri(Url);
@@ -83,7 +84,7 @@ namespace fluxpoint_sharp
         {
             try
             {
-                HttpRequestMessage Req = new HttpRequestMessage(HttpMethod.Get, new Uri(url));
+                HttpRequestMessage Req = new HttpRequestMessage(HttpMethod.Get, url);
                 if (template != null)
                     Req.Content = new StringContent(JsonConvert.SerializeObject(template), System.Text.Encoding.UTF8);
                 HttpResponseMessage Res = await Client.SendAsync(Req);
