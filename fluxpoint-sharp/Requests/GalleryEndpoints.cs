@@ -18,7 +18,7 @@ namespace fluxpoint_sharp
         public GallerySfwEndpoints Sfw;
         public GalleryNsfwEndpoints Nsfw;
 
-        public async Task<GalleryMeResponse> GetMe()
+        private async Task<GalleryMeResponse> GetMe()
         {
             return await Client.SendRequest<GalleryMeResponse>(HttpType.Get, "/gallery/me");
         }

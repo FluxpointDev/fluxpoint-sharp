@@ -16,17 +16,17 @@ namespace fluxpoint_sharp
 
         public async Task<FileResponse> GetAnime()
         {
-            return await Client.SendRequest<FileResponse>(HttpType.Get, "/gallery/sfw/anime");
+            return await Client.SendRequest<FileResponse>(HttpType.Get, "https://gallery.fluxpoint.dev/api/sfw/anime");
         }
 
         public async Task<FileResponse> GetNekopara()
         {
-            return await Client.SendRequest<FileResponse>(HttpType.Get, "/gallery/sfw/nekopara");
+            return await Client.SendRequest<FileResponse>(HttpType.Get, "https://gallery.fluxpoint.dev/api/sfw/nekopara");
         }
 
         public async Task<FileResponse> GetAzurlane()
         {
-            return await Client.SendRequest<FileResponse>(HttpType.Get, "/gallery/sfw/azurlane");
+            return await Client.SendRequest<FileResponse>(HttpType.Get, "https://gallery.fluxpoint.dev/api/sfw/azurlane");
         }
 
     }

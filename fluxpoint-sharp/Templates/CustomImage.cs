@@ -20,7 +20,7 @@ namespace fluxpoint_sharp
             public int x = 0;
             public int y = 0;
             public int round = 0;
-            public int radious = 0;
+            public int radius = 0;
             public string color = "";
             public string cut = "";
         }
