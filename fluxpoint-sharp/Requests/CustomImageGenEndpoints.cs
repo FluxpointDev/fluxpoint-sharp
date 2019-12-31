@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace fluxpoint_sharp
 {
@@ -14,7 +11,7 @@ namespace fluxpoint_sharp
 
         private readonly FluxpointClient Client;
 
-        public async Task<byte[]> GetCustomImage(CustomImage temp)
+        public async Task<ImageResponse> GetCustomImage(CustomImage temp)
         {
             return await Client.SendImageRequest(temp, "/gen/custom");
         }

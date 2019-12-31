@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace fluxpoint_sharp
@@ -80,7 +81,7 @@ namespace fluxpoint_sharp
             }
         }
 
-        public async Task<byte[]> SendImageRequest(ITemplate template, string url)
+        public async Task<ImageResponse> SendImageRequest(ITemplate template, string url)
         {
             try
             {
@@ -89,31 +90,39 @@ namespace fluxpoint_sharp
                     Req.Content = new StringContent(JsonConvert.SerializeObject(template), System.Text.Encoding.UTF8);
                 HttpResponseMessage Res = await Client.SendAsync(Req);
                 byte[] Bytes = await Res.Content.ReadAsByteArrayAsync();
-                return Bytes;
+                if (Bytes[0] == '{')
+                {
+                    string Json = Encoding.UTF8.GetString(Bytes);
+                    return JsonConvert.DeserializeObject<ImageResponse>(Json);
+                }
+                else
+                {
+                    return new ImageResponse { bytes = Bytes, code = 200, status = "ok" };
+                }
             }
             catch
             {
-                return new byte[0];
+                return new ImageResponse { code = 500, status = "error", message = "Client failed to connect to the api" };
             }
         }
 
-        //public async Task<JObject> SendCustomRequest(HttpMethod method, string url)
-        //{
-        //    try
-        //    {
-        //        HttpRequestMessage Req = new HttpRequestMessage(method, url);
-        //        HttpResponseMessage Res = await Client.SendAsync(Req);
-        //        string Message = await Res.Content.ReadAsStringAsync();
-        //        JObject response = (JObject)JsonConvert.DeserializeObject(Message);
-        //        if (response == null)
-        //            return (JObject)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new IResponse(500, "Could not parse json response")));
-        //        return response;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return (JObject)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new IResponse(400, ex.Message)));
-        //    }
-        //}
+        public async Task<JObject> SendCustomRequest(HttpMethod method, string url)
+        {
+            try
+            {
+                HttpRequestMessage Req = new HttpRequestMessage(method, url);
+                HttpResponseMessage Res = await Client.SendAsync(Req);
+                string Message = await Res.Content.ReadAsStringAsync();
+                JObject response = (JObject)JsonConvert.DeserializeObject(Message);
+                if (response == null)
+                    return (JObject)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new IResponse(500, "Could not parse json response")));
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return (JObject)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new IResponse(400, ex.Message)));
+            }
+        }
     }
     public enum HttpType
     {

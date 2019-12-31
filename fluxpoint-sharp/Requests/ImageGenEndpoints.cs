@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace fluxpoint_sharp
 {
@@ -14,12 +11,12 @@ namespace fluxpoint_sharp
 
         private readonly FluxpointClient Client;
 
-        public async Task<byte[]> GetTestImage()
+        public async Task<ImageResponse> GetTestImage()
         {
             return await Client.SendImageRequest(null, "/gen/test");
         }
 
-        public async Task<byte[]> GetWelcomeImage(WelcomeTemplates temp)
+        public async Task<ImageResponse> GetWelcomeImage(WelcomeTemplates temp)
         {
             return await Client.SendImageRequest(temp, "/gen/welcome");
         }

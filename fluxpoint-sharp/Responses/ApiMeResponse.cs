@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace fluxpoint_sharp
 {
@@ -14,7 +12,5 @@ namespace fluxpoint_sharp
         public bool donator;
         public bool owner;
         public bool disabled;
-        public string galleryUser;
-        public int galleryUserID;
     }
 }

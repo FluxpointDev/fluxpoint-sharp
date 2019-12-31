@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace fluxpoint_sharp
+﻿namespace fluxpoint_sharp
 {
     public class GalleryEndpoints
     {
@@ -18,9 +13,9 @@ namespace fluxpoint_sharp
         public GallerySfwEndpoints Sfw;
         public GalleryNsfwEndpoints Nsfw;
 
-        private async Task<GalleryMeResponse> GetMe()
-        {
-            return await Client.SendRequest<GalleryMeResponse>(HttpType.Get, "/gallery/me");
-        }
+        //private async Task<GalleryMeResponse> GetMe()
+        //{
+        //    return await Client.SendRequest<GalleryMeResponse>(HttpType.Get, "/gallery/me");
+        //}
     }
 }
