@@ -4,22 +4,21 @@
     {
         public IResponse(int cd = 0, string msg = "")
         {
-            if (cd != 0)
-            {
-                status = "error";
-                code = cd;
-                message = msg;
-            }
+            code = cd;
+            message = msg;
         }
-        public string status;
+        public bool success;
         public int code;
         public string message;
+    }
 
-        public bool isError()
+    public class ErrorResponse : IResponse
+    {
+        public ErrorResponse(int cd = 0, string msg = "")
         {
-            if (code == 200)
-                return false;
-            return true;
+            code = cd;
+            message = msg;
         }
     }
+
 }

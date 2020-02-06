@@ -72,12 +72,12 @@ namespace fluxpoint_sharp
                 };
                 T response = JsonConvert.DeserializeObject<T>(Message, jsonSerializerSettings);
                 if (response == null)
-                    return new IResponse(500, "Could not parse json") as T;
+                    return new ErrorResponse(500, "Could not parse json") as T;
                 return response;
             }
             catch (Exception ex)
             {
-                return new IResponse(400, ex.Message) as T;
+                return new ErrorResponse(400, ex.Message) as T;
             }
         }
 
@@ -97,12 +97,12 @@ namespace fluxpoint_sharp
                 }
                 else
                 {
-                    return new ImageResponse { bytes = Bytes, code = 200, status = "ok" };
+                    return new ImageResponse { bytes = Bytes, code = 200, success = true };
                 }
             }
             catch
             {
-                return new ImageResponse { code = 500, status = "error", message = "Client failed to connect to the api" };
+                return new ImageResponse { code = 500, success = false, message = "Client failed to connect to the api" };
             }
         }
 
