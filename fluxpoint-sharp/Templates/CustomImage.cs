@@ -34,7 +34,11 @@ namespace fluxpoint_sharp
             public int outline = 0;
             public string blend = "";
             public bool bold = false;
-            public bool unicode = false;
+
+            /// <summary>
+            /// Max width of the text untill it splits to a new line
+            /// </summary>
+            public int width = 0;
         }
     }
 }
