@@ -11,24 +11,23 @@ namespace fluxpoint_sharp
 
         private readonly FluxpointClient Client;
 
-        public async Task<ImageResponse> GetTestImage()
-        {
-            return await Client.SendImageRequest(null, "/gen/test");
-        }
+        public Task<ImageResponse> GetTestImageAsync()
+        => Client.SendImageRequest(null, "/test/image");
+        
 
-        public async Task<ImageResponse> GetWelcomeImage(WelcomeTemplates temp)
-        {
-            return await Client.SendImageRequest(temp, "/gen/welcome");
-        }
+        public Task<ImageResponse> GetWelcomeImageAsync(WelcomeTemplates temp)
+        => Client.SendImageRequest(temp, "/gen/welcome");
+        
 
-        public async Task<ListResponse> GetIconsList()
-        {
-            return await Client.SendRequest<ListResponse>(HttpType.Get, "/list/icons");
-        }
+        public Task<ListResponse> GetIconsListAsync()
+        => Client.SendRequest<ListResponse>(HttpType.Get, ApiType.Fluxpoint, "/list/icons");
+        
 
-        public async Task<ListResponse> GetBannersList()
-        {
-            return await Client.SendRequest<ListResponse>(HttpType.Get, "/list/banners");
-        }
+        public Task<ListResponse> GetBannersListAsync()
+        =>  Client.SendRequest<ListResponse>(HttpType.Get, ApiType.Fluxpoint, "/list/banners");
+
+        public Task<ImageResponse> SendCustomImageAsync(CustomImage temp)
+        => Client.SendImageRequest(temp, "/gen/custom");
+
     }
 }

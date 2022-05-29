@@ -10,13 +10,11 @@ namespace fluxpoint_sharp
         }
 
         private readonly FluxpointClient Client;
-        public async Task<HomeResponse> GetHome()
-        {
-            return await Client.SendRequest<HomeResponse>(HttpType.Get, "/");
-        }
-        public async Task<IResponse> GetError()
-        {
-            return await Client.SendRequest<IResponse>(HttpType.Get, "/http?code=400");
-        }
+        public Task<HomeResponse> GetHomeAsync()
+        => Client.SendRequest<HomeResponse>(HttpType.Get, ApiType.Fluxpoint, "/");
+        
+        public Task<IResponse> GetErrorAsync()
+        => Client.SendRequest<IResponse>(HttpType.Get, ApiType.Fluxpoint, "/test/error");
+        
     }
 }
