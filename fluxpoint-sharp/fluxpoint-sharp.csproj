@@ -4,13 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>fluxpoint_sharp</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Fully revamped the requests and added tons of new endpoints to be fully updated with the api.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed image gen text being int and not double.</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/FluxpointDev/fluxpoint-sharp</RepositoryUrl>
     <PackageProjectUrl>https://fluxpoint.dev</PackageProjectUrl>
     <Company>Fluxpoint Development</Company>
     <Authors>Builderb</Authors>
     <Description>A C# lib for the Fluxpoint API with gallery images, image gen and other misc stuff</Description>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <PackageTags>discord,bot,discordbot,discord bot,api,fluxpoint,fluxpointdev,fluxpoint dev,fluxpoint development</PackageTags>
   </PropertyGroup>
 

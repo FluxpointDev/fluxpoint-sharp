@@ -48,7 +48,7 @@ namespace fluxpoint_sharp
         public bool bold = false;
         public bool italics = false;
         public bool underline = false;
-        public int line = 1;
+        public double line = 1;
         public int weight = 500;
         /// <summary>
         /// Max width of the text untill it splits to a new line
