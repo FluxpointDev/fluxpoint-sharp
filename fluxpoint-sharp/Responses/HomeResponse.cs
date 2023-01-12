@@ -6,8 +6,8 @@
         public string discord;
         public string docs;
         public string twitter;
-        public string reddit;
         public string email;
         public string donate;
+        public string revolt;
     }
 }

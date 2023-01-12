@@ -20,10 +20,10 @@ namespace fluxpoint_sharp
         public FluxpointClient(string botname, string token)
         {
             if (string.IsNullOrEmpty(botname))
-                throw new Exception("Bot name cannot be null");
+                throw new FluxpointClientException("Fluxpoint client bot name is missing");
 
             if (string.IsNullOrEmpty(token))
-                throw new Exception("Token cannot be null");
+                throw new FluxpointClientException("Fluxpoint client token is missing");
 
             if (Client == null)
             {
@@ -31,27 +31,41 @@ namespace fluxpoint_sharp
                 {
                     BaseAddress = new Uri("https://api.fluxpoint.dev/")
                 };
-                Client.DefaultRequestHeaders.Add("User-Agent", $"fluxpoint-sharp | {botname}");
+                Client.DefaultRequestHeaders.Add("User-Agent", $"fluxpoint-sharp ({botname})");
                 Client.DefaultRequestHeaders.Add("Authorization", token);
                 Json = new JsonSerializer();
             }
-            Test = new TestEndpoints(this);
-            Sfw = new GalleryImageEndpoints(this);
+
+            Animal = new AnimalEndpoints(this);
+            Color = new ColorEndpoints(this);
+            Convert = new ConvertEndpoints(this);
             Gifs = new GalleryGifEndpoints(this);
-            ImageGen = new ImageGenEndpoints(this);
+            Sfw = new GalleryImageEndpoints(this);
             Nsfw = new GalleryNsfwEndpoints(this);
+            ImageGen = new ImageGenEndpoints(this);
+            List = new ListEndpoints(this);
+            Meme = new MemeEndpoints(this);
+            Minecraft = new MinecraftEndpoints(this);
             Misc = new MiscEndpoints(this);
+            Test = new TestEndpoints(this);
         }
 
         private static HttpClient Client;
         private static JsonSerializer Json;
 
-        public readonly TestEndpoints Test;
-        public readonly GalleryImageEndpoints Sfw;
+        public readonly AnimalEndpoints Animal;
+        public readonly ColorEndpoints Color;
+        public readonly ConvertEndpoints Convert;
         public readonly GalleryGifEndpoints Gifs;
-        public readonly ImageGenEndpoints ImageGen;
+        public readonly GalleryImageEndpoints Sfw;
         public readonly GalleryNsfwEndpoints Nsfw;
+        public readonly ImageGenEndpoints ImageGen;
+        public readonly ListEndpoints List;
+        public readonly MemeEndpoints Meme;
+        public readonly MinecraftEndpoints Minecraft;
         public readonly MiscEndpoints Misc;
+        public readonly TestEndpoints Test;
+        
         public async Task<bool> TestAuthentication()
         {
             ApiMeResponse Res = await SendRequest<ApiMeResponse>(HttpType.Get, ApiType.Fluxpoint, "/me").ConfigureAwait(false);
@@ -60,17 +74,23 @@ namespace fluxpoint_sharp
             return false;
         }
 
-        public async Task<T> SendRequest<T>(HttpType method, ApiType type, string path) where T : IResponse
+        public async Task<T> SendRequest<T>(HttpType method, ApiType type, string path, object content = null) where T : IResponse
         {
             if (string.IsNullOrEmpty(path))
                 return new ErrorResponse(400, "The request endpoint can't be empty.") as T;
             string Url = type == ApiType.Fluxpoint ? "" : "https://gallery.fluxpoint.dev/api";
             try
             {
-                HttpMethod mt = HttpMethod.Get;
-                if (method == HttpType.Post)
-                    mt = HttpMethod.Post;
-                HttpRequestMessage Req = new HttpRequestMessage(mt, path[0] == '/' ? Url + path : Url + '/' + path);
+                HttpMethod Method = method == HttpType.Post ? HttpMethod.Post : HttpMethod.Get;
+                string Path = path[0] == '/' ? Url + path : Url + '/' + path;
+
+                HttpRequestMessage Req = new HttpRequestMessage(Method, Path);
+                if (content != null)
+                {
+                    if (content is string stc)
+                        Req.Content = new StringContent(stc);
+                }
+
                 HttpResponseMessage Res = await Client.SendAsync(Req).ConfigureAwait(false);
                 Stream Stream = await Res.Content.ReadAsStreamAsync().ConfigureAwait(false);
                 using (TextReader text = new StreamReader(Stream))
@@ -89,6 +109,7 @@ namespace fluxpoint_sharp
         {
             if (string.IsNullOrEmpty(path))
                 return new ImageResponse { code = 400, message = "The request endpoint can't be empty." };
+
             try
             {
                 HttpRequestMessage Req = new HttpRequestMessage(HttpMethod.Get, path[0] == '/' ? path : '/' + path);
