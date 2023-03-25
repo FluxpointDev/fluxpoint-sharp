@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace fluxpoint_sharp.Responses
+﻿namespace fluxpoint_sharp.Responses
 {
     public class MinecraftServerResponse : IResponse
     {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace fluxpoint_sharp
+﻿namespace fluxpoint_sharp
 {
     public class ColorResponse : IResponse
     {

@@ -2,20 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+	
     <RootNamespace>fluxpoint_sharp</RootNamespace>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Added a few more endpoints, argument checks, FluxpointClientException and changes to the categories.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Better response stream handling and memory usage, updated newtonsoft to 13.0.3 and fixed json object content on SendAsync() for custom requests.</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/FluxpointDev/fluxpoint-sharp</RepositoryUrl>
     <PackageProjectUrl>https://fluxpoint.dev</PackageProjectUrl>
     <Company>Fluxpoint Development</Company>
     <Authors>Builderb</Authors>
     <Description>A C# lib for the Fluxpoint API with gallery images, image gen and other misc stuff</Description>
-    <Version>3.0.0</Version>
+    <Version>3.0.1</Version>
     <PackageTags>discord,bot,discordbot,discord bot,api,fluxpoint,fluxpointdev,fluxpoint dev,fluxpoint development</PackageTags>
   </PropertyGroup>
 
+
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.3.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.IO;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
@@ -35,7 +36,6 @@ namespace fluxpoint_sharp
                 Client.DefaultRequestHeaders.Add("Authorization", token);
                 Json = new JsonSerializer();
             }
-
             Animal = new AnimalEndpoints(this);
             Color = new ColorEndpoints(this);
             Convert = new ConvertEndpoints(this);
@@ -65,7 +65,9 @@ namespace fluxpoint_sharp
         public readonly MinecraftEndpoints Minecraft;
         public readonly MiscEndpoints Misc;
         public readonly TestEndpoints Test;
-        
+
+        private static readonly RecyclableMemoryStreamManager  recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
+
         public async Task<bool> TestAuthentication()
         {
             ApiMeResponse Res = await SendRequest<ApiMeResponse>(HttpType.Get, ApiType.Fluxpoint, "/me").ConfigureAwait(false);
@@ -89,14 +91,21 @@ namespace fluxpoint_sharp
                 {
                     if (content is string stc)
                         Req.Content = new StringContent(stc);
+                    else
+                        Req.Content = new StringContent(JsonConvert.SerializeObject(content));
                 }
 
                 HttpResponseMessage Res = await Client.SendAsync(Req).ConfigureAwait(false);
-                Stream Stream = await Res.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                using (TextReader text = new StreamReader(Stream))
-                using (JsonReader reader = new JsonTextReader(text))
+                int BufferSize = (int)Res.Content.Headers.ContentLength.Value;
+                using (MemoryStream Stream = recyclableMemoryStreamManager.GetStream("FPSharp-SendRequest", BufferSize))
                 {
-                    return Json.Deserialize<T>(reader);
+                    await Res.Content.CopyToAsync(Stream);
+                    Stream.Position = 0;
+                    using (TextReader text = new StreamReader(Stream))
+                    using (JsonReader reader = new JsonTextReader(text))
+                    {
+                        return Json.Deserialize<T>(reader);
+                    }
                 }
             }
             catch (Exception ex)
@@ -175,6 +184,7 @@ namespace fluxpoint_sharp
             }
         }
     }
+
     public enum HttpType
     {
         Get, Post
