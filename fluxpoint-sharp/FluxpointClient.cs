@@ -66,7 +66,7 @@ namespace fluxpoint_sharp
         public readonly MiscEndpoints Misc;
         public readonly TestEndpoints Test;
 
-        private static readonly RecyclableMemoryStreamManager  recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
+        private static readonly RecyclableMemoryStreamManager recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
 
         public async Task<bool> TestAuthentication()
         {

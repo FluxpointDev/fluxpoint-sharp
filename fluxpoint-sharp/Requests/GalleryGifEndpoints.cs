@@ -87,7 +87,7 @@ namespace fluxpoint_sharp
             => Client.SendRequest<FileResponse>(HttpType.Get, ApiType.Gallery, "/sfw/gif/wave");
 
         public Task<FileResponse> GetWinkAsync()
-            => Client.SendRequest<FileResponse>(HttpType.Get, ApiType.Gallery, "/sfw/gif/wave");
+            => Client.SendRequest<FileResponse>(HttpType.Get, ApiType.Gallery, "/sfw/gif/wink");
 
 
     }

@@ -5,13 +5,13 @@
 	
     <RootNamespace>fluxpoint_sharp</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Better response stream handling and memory usage, updated newtonsoft to 13.0.3 and fixed json object content on SendAsync() for custom requests.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix wink gif returning wave</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/FluxpointDev/fluxpoint-sharp</RepositoryUrl>
     <PackageProjectUrl>https://fluxpoint.dev</PackageProjectUrl>
     <Company>Fluxpoint Development</Company>
     <Authors>Builderb</Authors>
     <Description>A C# lib for the Fluxpoint API with gallery images, image gen and other misc stuff</Description>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <PackageTags>discord,bot,discordbot,discord bot,api,fluxpoint,fluxpointdev,fluxpoint dev,fluxpoint development</PackageTags>
   </PropertyGroup>
 
