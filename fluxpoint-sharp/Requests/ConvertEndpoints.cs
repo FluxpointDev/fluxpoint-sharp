@@ -1,31 +1,30 @@
 ﻿using System.Threading.Tasks;
 
-namespace fluxpoint_sharp
+namespace fluxpoint_sharp;
+
+public class ConvertEndpoints
 {
-    public class ConvertEndpoints
+    public ConvertEndpoints(FluxpointClient client)
     {
-        public ConvertEndpoints(FluxpointClient client)
-        {
-            Client = client;
-        }
+        Client = client;
+    }
 
-        private readonly FluxpointClient Client;
+    private readonly FluxpointClient Client;
 
 
-        public Task<ContentResponse> ConvertHtmlToMarkdownAsync(string html)
-        {
-            if (string.IsNullOrEmpty(html))
-                throw new FluxpointClientException("Convert html argument is missing.");
+    public Task<ContentResponse> ConvertHtmlToMarkdownAsync(string html)
+    {
+        if (string.IsNullOrEmpty(html))
+            throw new FluxpointClientException("Convert html argument is missing.");
 
-            return Client.SendRequest<ContentResponse>(HttpType.Get, ApiType.Fluxpoint, "/convert/html-markdown", html);
-        }
+        return Client.SendRequest<ContentResponse>(HttpType.Get, "/convert/html-markdown", html);
+    }
 
-        public Task<ContentResponse> ConvertMarkdownToHtmlAsync(string markdown)
-        {
-            if (string.IsNullOrEmpty(markdown))
-                throw new FluxpointClientException("Markdown convert argument is missing.");
+    public Task<ContentResponse> ConvertMarkdownToHtmlAsync(string markdown)
+    {
+        if (string.IsNullOrEmpty(markdown))
+            throw new FluxpointClientException("Markdown convert argument is missing.");
 
-            return Client.SendRequest<ContentResponse>(HttpType.Get, ApiType.Fluxpoint, "/convert/markdown-html", markdown);
-        }
+        return Client.SendRequest<ContentResponse>(HttpType.Get, "/convert/markdown-html", markdown);
     }
 }

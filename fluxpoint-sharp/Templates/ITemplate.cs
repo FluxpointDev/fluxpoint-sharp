@@ -1,6 +1,5 @@
-﻿namespace fluxpoint_sharp
+﻿namespace fluxpoint_sharp;
+
+public class ITemplate
 {
-    public class ITemplate
-    {
-    }
 }

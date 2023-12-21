@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33402.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fluxpoint-sharp", "fluxpoint-sharp\fluxpoint-sharp.csproj", "{AF9AFC68-5D65-4293-BFF6-9DE365834C48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fluxpoint-sharp-tests", "fluxpoint-sharp-tests\fluxpoint-sharp-tests.csproj", "{1DDC3094-1AB6-40D0-8288-CDAA89B3E8EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fluxpoint-sharp.Tests", "fluxpoint-sharp.Tests\fluxpoint-sharp.Tests.csproj", "{F281891F-7784-4A22-BB96-011B64399732}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{AF9AFC68-5D65-4293-BFF6-9DE365834C48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF9AFC68-5D65-4293-BFF6-9DE365834C48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF9AFC68-5D65-4293-BFF6-9DE365834C48}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1DDC3094-1AB6-40D0-8288-CDAA89B3E8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1DDC3094-1AB6-40D0-8288-CDAA89B3E8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1DDC3094-1AB6-40D0-8288-CDAA89B3E8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1DDC3094-1AB6-40D0-8288-CDAA89B3E8EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F281891F-7784-4A22-BB96-011B64399732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F281891F-7784-4A22-BB96-011B64399732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F281891F-7784-4A22-BB96-011B64399732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F281891F-7784-4A22-BB96-011B64399732}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

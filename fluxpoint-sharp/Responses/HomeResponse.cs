@@ -1,13 +1,12 @@
-﻿namespace fluxpoint_sharp
+﻿namespace fluxpoint_sharp;
+
+public class HomeResponse : IResponse
 {
-    public class HomeResponse : IResponse
-    {
-        public string website;
-        public string discord;
-        public string docs;
-        public string twitter;
-        public string email;
-        public string donate;
-        public string revolt;
-    }
+    public string website { get; set; }
+    public string discord { get; set; }
+    public string docs { get; set; }
+    public string twitter { get; set; }
+    public string email { get; set; }
+    public string donate { get; set; }
+    public string revolt { get; set; }
 }

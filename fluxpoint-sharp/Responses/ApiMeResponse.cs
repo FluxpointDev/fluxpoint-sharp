@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace fluxpoint_sharp
+namespace fluxpoint_sharp;
+
+public class ApiMeResponse : IResponse
 {
-    public class ApiMeResponse : IResponse
-    {
-        public string id;
-        public DateTime created;
-        public bool britishAchievement;
-    }
+    public string id { get; set; }
+    public DateTime created { get; set; }
+    public bool britishAchievement { get; set; }
 }

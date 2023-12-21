@@ -1,7 +1,6 @@
-﻿namespace fluxpoint_sharp
+﻿namespace fluxpoint_sharp;
+
+public class ContentResponse : IResponse
 {
-    public class ContentResponse : IResponse
-    {
-        public string content;
-    }
+    public string content { get; set; }
 }

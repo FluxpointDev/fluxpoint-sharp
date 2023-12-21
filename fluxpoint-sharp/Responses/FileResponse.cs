@@ -1,7 +1,6 @@
-﻿namespace fluxpoint_sharp
+﻿namespace fluxpoint_sharp;
+
+public class FileResponse : IResponse
 {
-    public class FileResponse : IResponse
-    {
-        public string file;
-    }
+    public string file { get; set; }
 }
